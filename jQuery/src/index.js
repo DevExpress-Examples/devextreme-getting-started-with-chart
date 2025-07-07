@@ -38,7 +38,7 @@ $(() => {
     },
     commonPaneSettings: {
       backgroundColor: {
-        base: '#f5564a',
+        base: '#ffffff',
         fillId: registerGradient('linear', {
           colors: [{
             offset: '20%',
