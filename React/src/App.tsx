@@ -1,8 +1,17 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import './App.css';
 
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
-import { BackgroundColor, Chart, CommonPaneSettings, ConstantLine, Label, Series, Tooltip, ValueAxis, type ChartTypes } from 'devextreme-react/chart';
+import {
+  BackgroundColor,
+  Chart,
+  CommonPaneSettings,
+  ConstantLine,
+  Label,
+  Series,
+  Tooltip,
+  ValueAxis,
+} from 'devextreme-react/chart';
 import { registerGradient } from 'devextreme-react/common/charts';
 import { formatNumber } from 'devextreme/localization';
 
@@ -21,7 +30,7 @@ const chartData = [
   { month: 'December', targetSpend: 25000, actualSpend: 27000 },
 ];
 
-function calculateAverageSpend() {
+function calculateAverageSpend(): number {
   let sum = 0;
 
   chartData.forEach((data) => {
@@ -31,7 +40,7 @@ function calculateAverageSpend() {
   return sum / chartData.length;
 }
 
-function customizeTooltip(data: {value: number}) {
+function customizeTooltip(data: { value: number }): { text: string } {
   const isValueAboveAverage = data.value > calculateAverageSpend();
   const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - calculateAverageSpend(), 'currency')} above average spending.`;
   const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(calculateAverageSpend() - data.value, 'currency')} below average spending.`;
@@ -46,7 +55,7 @@ const chartGradient = registerGradient('linear', {
     offset: '90%',
     color: '#ffdeff',
   }],
-})
+});
 
 function App(): JSX.Element {
   return (
