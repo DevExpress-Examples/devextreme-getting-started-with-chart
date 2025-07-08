@@ -67,7 +67,7 @@ const chartData = [
 const averageSpend = calculateAverageSpend();
 
 function calculateAverageSpend() {
-  let sum = chartData.reduce((accumulator, { actualSpend }) => accumulator + actualSpend, 0);
+  const sum = chartData.reduce((accumulator, { actualSpend }) => accumulator + actualSpend, 0);
 
   return sum / chartData.length;
 }
@@ -78,7 +78,7 @@ function customizeTooltip(data) {
   }
   const isValueAboveAverage = data.value > averageSpend;
   if (isValueAboveAverage) {
-    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.` }
+    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.` };
   }
 
   return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend - data.value, 'currency')} below average spending.` };
