@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import './App.css';
 
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
@@ -31,11 +31,7 @@ const chartData = [
 ];
 
 function calculateAverageSpend(): number {
-  let sum = 0;
-
-  chartData.forEach((data) => {
-    sum += data.actualSpend;
-  });
+  const sum = chartData.reduce((accumulator, { actualSpend }) => accumulator + actualSpend, 0);
 
   return sum / chartData.length;
 }
@@ -61,8 +57,12 @@ const chartGradient = registerGradient('linear', {
 });
 
 function App(): JSX.Element {
+  // This example implements useState() for averageSpend to avoid setting the property on each render cycle.
+  // The useState() setter function is not declared as it is unused in this app.
+  const [averageSpend] = useState(calculateAverageSpend());
+
   return (
-    <React.Fragment>
+    <>
       <Chart
         dataSource={chartData}
         title='Target vs Actual Spending 2024'
@@ -83,7 +83,7 @@ function App(): JSX.Element {
         />
         <ValueAxis>
           <ConstantLine
-            value={calculateAverageSpend()}
+            value={averageSpend}
             color='#0000c7'
           >
             <Label text='Yearly Spend Average' />
@@ -101,7 +101,7 @@ function App(): JSX.Element {
           </BackgroundColor>
         </CommonPaneSettings>
       </Chart>
-    </React.Fragment>
+    </>
   );
 }
 
