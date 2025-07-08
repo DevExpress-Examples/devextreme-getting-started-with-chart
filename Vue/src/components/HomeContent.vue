@@ -29,7 +29,10 @@ function calculateAverageSpend() {
   return sum / chartData.length;
 }
 
-function customizeTooltip(data: { value: number }) {
+function customizeTooltip(data: { value: number; seriesName: string }) {
+  if (data.seriesName === 'Budget') {
+    return { text: formatNumber(data.value, 'currency') };
+  }
   const isValueAboveAverage = data.value > calculateAverageSpend();
   const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - calculateAverageSpend(), 'currency')} above average spending.`;
   const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(calculateAverageSpend() - data.value, 'currency')} below average spending.`;
@@ -63,7 +66,7 @@ const chartGradient = registerGradient('linear', {
         type="spline"
         argument-field="month"
         value-field="actualSpend"
-        name="Amount Spend"
+        name="Amount Spent"
         color="#cb4bfa"
       />
       <DxValueAxis>
