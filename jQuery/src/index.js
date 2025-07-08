@@ -29,15 +29,7 @@ $(() => {
     }],
     tooltip: {
       enabled: true,
-      customizeTooltip(data) {
-        if (data.seriesName === 'Budget') {
-          return { text: formatNumber(data.value, 'currency') };
-        }
-        const isValueAboveAverage = data.value > averageSpend;
-        const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.`;
-        const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend - data.value, 'currency')} below average spending.`;
-        return { text: isValueAboveAverage ? aboveText : belowText };
-      },
+      customizeTooltip,
     },
     commonPaneSettings: {
       backgroundColor: {
@@ -75,11 +67,19 @@ const chartData = [
 const averageSpend = calculateAverageSpend();
 
 function calculateAverageSpend() {
-  let sum = 0;
-
-  chartData.forEach((data) => {
-    sum += data.actualSpend;
-  });
+  let sum = chartData.reduce((accumulator, { actualSpend }) => accumulator + actualSpend, 0);
 
   return sum / chartData.length;
+}
+
+function customizeTooltip(data) {
+  if (data.seriesName === 'Budget') {
+    return { text: formatNumber(data.value, 'currency') };
+  }
+  const isValueAboveAverage = data.value > averageSpend;
+  if (isValueAboveAverage) {
+    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.` }
+  }
+
+  return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend - data.value, 'currency')} below average spending.` };
 }
