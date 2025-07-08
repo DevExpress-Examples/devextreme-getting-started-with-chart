@@ -40,7 +40,10 @@ function calculateAverageSpend(): number {
   return sum / chartData.length;
 }
 
-function customizeTooltip(data: { value: number }): { text: string } {
+function customizeTooltip(data: { value: number; seriesName: string }): { text: string } {
+  if (data.seriesName === 'Budget') {
+    return { text: formatNumber(data.value, 'currency') };
+  }
   const isValueAboveAverage = data.value > calculateAverageSpend();
   const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - calculateAverageSpend(), 'currency')} above average spending.`;
   const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(calculateAverageSpend() - data.value, 'currency')} below average spending.`;
@@ -75,7 +78,7 @@ function App(): JSX.Element {
           type='spline'
           argumentField='month'
           valueField='actualSpend'
-          name='Amount Spend'
+          name='Amount Spent'
           color='#cb4bfa'
         />
         <ValueAxis>
