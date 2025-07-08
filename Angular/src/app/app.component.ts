@@ -47,9 +47,9 @@ export class AppComponent {
     return sum / this.chartData.length;
   }
 
-  customizeTooltip: (data: { value: number, seriesName: string }) => { text: string } = (data: { value: number, seriesName: string }) => {
-    if (data.seriesName === "Budget") {
-      return { text: formatNumber(data.value, 'currency') }
+  customizeTooltip: (data: { value: number; seriesName: string }) => { text: string } = (data: { value: number; seriesName: string }) => {
+    if (data.seriesName === 'Budget') {
+      return { text: formatNumber(data.value, 'currency') };
     }
     const isValueAboveAverage = data.value > this.averageSpend;
     const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - this.averageSpend, 'currency')} above average spending.`;
