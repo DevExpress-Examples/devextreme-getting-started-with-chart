@@ -15,7 +15,7 @@ $(() => {
       type: 'spline',
       argumentField: 'month',
       valueField: 'actualSpend',
-      name: 'Amount Spend',
+      name: 'Amount Spent',
       color: '#cb4bfa',
     }],
     valueAxis: [{
@@ -30,6 +30,9 @@ $(() => {
     tooltip: {
       enabled: true,
       customizeTooltip(data) {
+        if (data.seriesName === 'Budget') {
+          return { text: formatNumber(data.value, 'currency') };
+        }
         const isValueAboveAverage = data.value > averageSpend;
         const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.`;
         const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend - data.value, 'currency')} below average spending.`;
