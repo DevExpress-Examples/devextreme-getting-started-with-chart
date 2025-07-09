@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import DxChart, { DxBackgroundColor, DxCommonPaneSettings, DxConstantLine, DxLabel, DxSeries, DxTooltip, DxValueAxis } from 'devextreme-vue/chart';
 import { registerGradient } from 'devextreme-vue/common/charts';
@@ -20,14 +22,12 @@ const chartData = [
 ];
 
 function calculateAverageSpend() {
-  let sum = 0;
-
-  chartData.forEach((data) => {
-    sum += data.actualSpend;
-  });
+  const sum = chartData.reduce((accumulator, { actualSpend }) => accumulator + actualSpend, 0);
 
   return sum / chartData.length;
 }
+
+const averageSpend = ref(calculateAverageSpend());
 
 function customizeTooltip(data: { value: number; seriesName: string }) {
   if (data.seriesName === 'Budget') {
@@ -48,6 +48,7 @@ const chartGradient = registerGradient('linear', {
     color: '#ffdeff',
   }],
 });
+
 </script>
 <template>
   <div>
@@ -71,7 +72,7 @@ const chartGradient = registerGradient('linear', {
       />
       <DxValueAxis>
         <DxConstantLine
-          :value="calculateAverageSpend()"
+          :value="averageSpend"
           color="#0000c7"
         >
           <DxLabel
