@@ -38,11 +38,7 @@ export class AppComponent {
   averageSpend = this.calculateAverageSpend();
 
   calculateAverageSpend(): number {
-    let sum = 0;
-
-    this.chartData.forEach((data) => {
-      sum += data.actualSpend;
-    });
+    const sum = this.chartData.reduce((accumulator, { actualSpend }) => accumulator + actualSpend, 0);
 
     return sum / this.chartData.length;
   }
