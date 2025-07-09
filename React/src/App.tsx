@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './App.css';
 
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
@@ -36,14 +35,18 @@ function calculateAverageSpend(): number {
   return sum / chartData.length;
 }
 
+const averageSpend = calculateAverageSpend();
+
 function customizeTooltip(data: { value: number; seriesName: string }): { text: string } {
   if (data.seriesName === 'Budget') {
     return { text: formatNumber(data.value, 'currency') };
   }
   const isValueAboveAverage = data.value > calculateAverageSpend();
-  const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - calculateAverageSpend(), 'currency')} above average spending.`;
-  const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(calculateAverageSpend() - data.value, 'currency')} below average spending.`;
-  return { text: isValueAboveAverage ? aboveText : belowText };
+  if (isValueAboveAverage) {
+    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.` };
+  }
+
+  return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend - data.value, 'currency')} below average spending.` };
 }
 
 const chartGradient = registerGradient('linear', {
@@ -57,10 +60,6 @@ const chartGradient = registerGradient('linear', {
 });
 
 function App(): JSX.Element {
-  // This example implements useState() for averageSpend to avoid setting the property on each render cycle.
-  // The useState() setter function is not declared as it is unused in this app.
-  const [averageSpend] = useState(calculateAverageSpend());
-
   return (
     <>
       <Chart
