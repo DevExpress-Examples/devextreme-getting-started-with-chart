@@ -34,9 +34,11 @@ function customizeTooltip(data: { value: number; seriesName: string }) {
     return { text: formatNumber(data.value, 'currency') };
   }
   const isValueAboveAverage = data.value > calculateAverageSpend();
-  const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - calculateAverageSpend(), 'currency')} above average spending.`;
-  const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(calculateAverageSpend() - data.value, 'currency')} below average spending.`;
-  return { text: isValueAboveAverage ? aboveText : belowText };
+  if (isValueAboveAverage) {
+    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend.value, 'currency')} above average spending.` };
+  }
+
+  return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend.value - data.value, 'currency')} below average spending.` };
 }
 
 const chartGradient = registerGradient('linear', {
