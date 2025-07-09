@@ -48,8 +48,10 @@ export class AppComponent {
       return { text: formatNumber(data.value, 'currency') };
     }
     const isValueAboveAverage = data.value > this.averageSpend;
-    const aboveText = `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - this.averageSpend, 'currency')} above average spending.`;
-    const belowText = `${formatNumber(data.value, 'currency')}\n${formatNumber(this.averageSpend - data.value, 'currency')} below average spending.`;
-    return { text: isValueAboveAverage ? aboveText : belowText };
+    if (isValueAboveAverage) {
+      return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - this.averageSpend, 'currency')} above average spending.` };
+    }
+
+    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(this.averageSpend - data.value, 'currency')} below average spending.` };
   };
 }
