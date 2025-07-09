@@ -1,3 +1,40 @@
 <div class="default-style">
-  <dx-button [text]="buttonText" (onClick)="onClick($event)"></dx-button>
+  <dx-chart
+    [dataSource]="chartData"
+    title="Target vs Actual Spending 2024"
+  >
+    <dxi-series
+      type="bar"
+      argumentField="month"
+      valueField="targetSpend"
+      name="Budget"
+      color="#5996ff"
+    ></dxi-series>
+    <dxi-series
+      type="spline"
+      argumentField="month"
+      valueField="actualSpend"
+      name="Amount Spent"
+      color="#cb4bfa"
+    ></dxi-series>
+    <dxi-value-axis>
+      <dxi-constant-line
+        [value]="averageSpend"
+      >
+        <dxo-label
+          text="Yearly Spend Average"
+        ></dxo-label>
+      </dxi-constant-line>
+    </dxi-value-axis>
+    <dxo-tooltip
+      [enabled]="true"
+      [customizeTooltip]="customizeTooltip"
+    ></dxo-tooltip>
+    <dxo-common-pane-settings>
+      <dxo-background-color
+        base="#ffffff"
+        [fillId]="chartGradient"
+      ></dxo-background-color>
+    </dxo-common-pane-settings>
+  </dx-chart>
 </div>
