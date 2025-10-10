@@ -1,8 +1,5 @@
 <div class="default-style">
-  <dx-chart
-    [dataSource]="chartData"
-    title="Target vs Actual Spending 2024"
-  >
+  <dx-chart [dataSource]="chartData" title="Target vs Actual Spending 2024">
     <dxi-series
       type="bar"
       argumentField="month"
@@ -18,12 +15,8 @@
       color="#cb4bfa"
     ></dxi-series>
     <dxi-value-axis>
-      <dxi-constant-line
-        [value]="averageSpend"
-      >
-        <dxo-label
-          text="Yearly Spend Average"
-        ></dxo-label>
+      <dxi-constant-line [value]="averageSpend">
+        <dxo-label text="Yearly Spend Average"></dxo-label>
       </dxi-constant-line>
     </dxi-value-axis>
     <dxo-tooltip

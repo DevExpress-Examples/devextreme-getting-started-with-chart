@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
@@ -61,7 +62,7 @@ const chartGradient = registerGradient('linear', {
 
 function App(): JSX.Element {
   return (
-    <>
+    <React.Fragment>
       <Chart
         dataSource={chartData}
         title='Target vs Actual Spending 2024'
@@ -100,7 +101,7 @@ function App(): JSX.Element {
           </BackgroundColor>
         </CommonPaneSettings>
       </Chart>
-    </>
+    </React.Fragment>
   );
 }
 
