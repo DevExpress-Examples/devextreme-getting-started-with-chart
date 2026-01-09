@@ -38,16 +38,18 @@ function calculateAverageSpend(): number {
 
 const averageSpend = calculateAverageSpend();
 
-function customizeTooltip(data: { value: number; seriesName: string }): { text: string } {
+function customizeTooltip(data: { value?: string | number | Date; seriesName?: string }): { text: string } {
+  const numValue = typeof data.value === 'number' ? data.value : 0;
+
   if (data.seriesName === 'Budget') {
-    return { text: formatNumber(data.value, 'currency') };
+    return { text: formatNumber(numValue, 'currency') };
   }
-  const isValueAboveAverage = data.value > calculateAverageSpend();
+  const isValueAboveAverage = numValue > calculateAverageSpend();
   if (isValueAboveAverage) {
-    return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - averageSpend, 'currency')} above average spending.` };
+    return { text: `${formatNumber(numValue, 'currency')}\n${formatNumber(numValue - averageSpend, 'currency')} above average spending.` };
   }
 
-  return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(averageSpend - data.value, 'currency')} below average spending.` };
+  return { text: `${formatNumber(numValue, 'currency')}\n${formatNumber(averageSpend - numValue, 'currency')} below average spending.` };
 }
 
 const chartGradient = registerGradient('linear', {
