@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-
+import { DxChartModule } from 'devextreme-angular/ui/chart';
 import { registerGradient } from 'devextreme-angular/common/charts';
 import { formatNumber } from 'devextreme/localization';
 
 @Component({
   selector: 'app-root',
+  imports: [DxChartModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
