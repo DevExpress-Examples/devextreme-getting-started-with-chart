@@ -4,7 +4,7 @@ const formatNumber = DevExpress.localization.formatNumber;
 $(() => {
   $('#chart').dxChart({
     dataSource: chartData,
-    title: 'Target vs Actual Spending 2024',
+    title: 'Target vs Actual Spending 2025',
     series: [{
       type: 'bar',
       argumentField: 'month',
