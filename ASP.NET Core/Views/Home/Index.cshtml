@@ -6,18 +6,20 @@
         .LoadAction("Get")
     )
     .Title("Target vs Actual Spending 2025")
-    .Series(s => s
-        .Add()
-        .Type(SeriesType.Bar)
-        .ArgumentField("Month")
-        .ValueField("TargetSpend")
-    )
-    .Series(s => s
-        .Add()
-        .Type(SeriesType.Spline)
-        .ArgumentField("Month")
-        .ValueField("ActualSpend")
-    )
+    .Series(s => {
+        s.Add()
+            .Type(SeriesType.Bar)
+            .ArgumentField("Month")
+            .ValueField("TargetSpend")
+            .Name("Budget")
+            .Color("#5996ff");
+        s.Add()
+            .Type(SeriesType.Spline)
+            .ArgumentField("Month")
+            .ValueField("ActualSpend")
+            .Name("Amount Spent")
+            .Color("#cb4bfa");
+    })
     .ValueAxis(v => v
         .Add()
         .ConstantLines(cl => cl
