@@ -1,0 +1,69 @@
+@using ASP_NET_Core.Models
+
+@(Html.DevExtreme().Chart()
+    .DataSource(d => d
+        .Mvc().Controller("ChartData")
+        .LoadAction("Get")
+    )
+    .Title("Target vs Actual Spending 2025")
+    .Series(s => {
+        s.Add()
+            .Type(SeriesType.Bar)
+            .ArgumentField("Month")
+            .ValueField("TargetSpend")
+            .Name("Budget")
+            .Color("#5996ff");
+        s.Add()
+            .Type(SeriesType.Spline)
+            .ArgumentField("Month")
+            .ValueField("ActualSpend")
+            .Name("Amount Spent")
+            .Color("#cb4bfa");
+    })
+    .ValueAxis(v => v
+        .Add()
+        .ConstantLines(cl => cl
+            .Add()
+            .Value(ChartData.AverageSpend)
+            .Color("#0000c7")
+            .Label(l => l.Text("Yearly Spend Average"))
+        )
+    )
+    .Tooltip(t => t
+        .Enabled(true)
+        .CustomizeTooltip("customizeTooltip")
+    )
+    .CommonPaneSettings(c => c
+        .BackgroundColor(b => b
+            .Base("#ffffff")
+            .FillId(new JS("fillId"))
+        )
+    )
+)
+
+<script>
+    const registerGradient = DevExpress.common.charts.registerGradient;
+    const formatNumber = DevExpress.localization.formatNumber;
+
+    function customizeTooltip(data) {
+        if (data.seriesName === 'Budget') {
+            return { text: formatNumber(data.value, 'currency') };
+        }
+        const isValueAboveAverage = data.value > @(ChartData.AverageSpend);
+        if (isValueAboveAverage) {
+            return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(data.value - @(ChartData.AverageSpend), 'currency')} above average spending.` };
+        }
+
+        return { text: `${formatNumber(data.value, 'currency')}\n${formatNumber(@(ChartData.AverageSpend) - data.value, 'currency')} below average spending.` };
+    }
+
+    const fillId = registerGradient('linear', {
+        colors: [{
+            offset: '20%',
+            color: '#dee4ff',
+        }, {
+            offset: '90%',
+            color: '#ffdeff',
+        }],
+    });
+</script>

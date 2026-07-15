@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import 'devextreme/dist/css/dx.material.blue.light.compact.css';
+import 'devextreme/dist/css/dx.fluent.blue.light.css';
 import DxChart, { DxBackgroundColor, DxCommonPaneSettings, DxConstantLine, DxLabel, DxSeries, DxTooltip, DxValueAxis } from 'devextreme-vue/chart';
 import { registerGradient } from 'devextreme-vue/common/charts';
 import { formatNumber } from 'devextreme/localization';
@@ -57,7 +57,7 @@ const chartGradient = registerGradient('linear', {
 <template>
   <div>
     <DxChart
-      title="Target vs Actual Spending 2024"
+      title="Target vs Actual Spending 2025"
       :data-source="chartData"
     >
       <DxSeries

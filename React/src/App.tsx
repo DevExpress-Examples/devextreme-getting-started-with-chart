@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import 'devextreme/dist/css/dx.material.blue.light.compact.css';
+import 'devextreme/dist/css/dx.fluent.blue.light.css';
 import {
   BackgroundColor,
   Chart,
@@ -67,7 +67,7 @@ function App(): JSX.Element {
     <React.Fragment>
       <Chart
         dataSource={chartData}
-        title='Target vs Actual Spending 2024'
+        title='Target vs Actual Spending 2025'
       >
         <Series
           type='bar'
